@@ -17,6 +17,13 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: true }
 }));
+
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+    res.locals.messages = require('express-messages')(req, res);
+    next();
+});
+
 // DB monfo
 mongoose.connect(dbConstants.dbUrl,{useNewUrlParser: true});
 const db = mongoose.connection;
